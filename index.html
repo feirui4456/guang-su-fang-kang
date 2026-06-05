@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大字号全透明科技电路组件</title>
+    <title>完全外透明科技电路组件</title>
     <style>
-        /* 页面背景重置：组件本身全透，这里仅供演示磨玻璃的透光效果 */
-        body {
+        /* 核心改动：网页背景彻底全透，去除所有预设颜色 */
+        html, body {
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #060913 0%, #111827 50%, #1a0b2e 100%);
+            background: transparent !important; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,7 +17,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* 核心组件容器：严格限制 400x300，背景完全透明 */
+        /* 大方框容器（400x300）：外部全透，内部保留毛玻璃折射层 */
         .component-container {
             width: 400px;
             height: 300px;
@@ -25,12 +25,14 @@
             overflow: hidden;
             border-radius: 16px;
             
+            /* 仅保留极微量的白透，让毛玻璃滤镜对下层网页内容产生高科技质感的折射 */
             background: rgba(255, 255, 255, 0.01); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            /* 细腻的半透明边缘，确保在任何深浅背景下都自然、不突兀 */
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
             
             display: flex;
             justify-content: center;
@@ -48,15 +50,13 @@
             pointer-events: none;
         }
 
-        /* 中心跳动数字方框外壳：横向大幅拉宽到 220px，专为超大数字设计 */
+        /* 中心跳动数字方框外壳 */
         .number-box-wrapper {
             position: relative;
             width: 220px;
             height: 120px;
             z-index: 5;
             cursor: pointer;
-            
-            /* 绑定小方块整体呼吸跳动 */
             animation: pulse 0.8s infinite alternate ease-in-out;
         }
 
@@ -66,8 +66,8 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 242, 254, 0.02); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 2px solid #00f2fe;
             box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), inset 0 0 15px rgba(0, 242, 254, 0.2);
             border-radius: 14px;
@@ -88,10 +88,10 @@
             width: 100%;
             height: 100%;
             z-index: 1; 
-            opacity: 0.8; 
+            opacity: 0.85; 
         }
 
-        /* 数字文本层：字号大幅度放宽，加强发光字效 */
+        /* 霸气的大数字文本层 */
         .number-text {
             position: relative;
             z-index: 2;
@@ -101,7 +101,7 @@
             text-shadow: 0 0 15px #00f2fe, 0 0 30px rgba(0, 242, 254, 0.6);
             user-select: none;
             white-space: nowrap; 
-            letter-spacing: 1px; /* 微微扩宽字间距提升科技美感 */
+            letter-spacing: 1px; 
             transition: font-size 0.15s ease; 
         }
 
@@ -129,7 +129,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(6, 8, 14, 0.7);
+            background: rgba(6, 8, 14, 0.8);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             z-index: 10;
@@ -258,7 +258,7 @@
         const modal = document.getElementById('settingModal');
         const openSettingBtn = document.getElementById('openSettingBtn');
 
-        // === 1. 数字跳动控制（全新大字号动态匹配） ===
+        // === 1. 数字跳动控制 ===
         function startNumberAnimation() {
             if (timer) clearInterval(timer);
             const maxLength = CONFIG.maxNum.toString().length;
@@ -272,7 +272,7 @@
                 const strNum = randomNum.toString().padStart(maxLength, '0');
                 numBox.textContent = strNum;
 
-                // 升级：全新大字号区间，确保任何位数下都尽可能填满方块，且视觉效果拉满
+                // 霸气大字号区间自适应
                 if (strNum.length <= 2) {
                     numBox.style.fontSize = '56px';
                 } else if (strNum.length === 3) {
@@ -280,9 +280,9 @@
                 } else if (strNum.length === 4) {
                     numBox.style.fontSize = '46px';
                 } else if (strNum.length === 5) {
-                    numBox.style.fontSize = '42px'; // 5位数现在非常硕大清晰！
+                    numBox.style.fontSize = '42px'; 
                 } else {
-                    numBox.style.fontSize = '32px'; // 6位及以上
+                    numBox.style.fontSize = '32px'; 
                 }
             }
 
@@ -324,10 +324,10 @@
         startNumberAnimation();
 
 
-        // === 3. 透明底色“大尺寸数字电路走向图”引擎 ===
+        // === 3. 透明底色电路走向图引擎 ===
         const circuitCanvas = document.getElementById('circuitCanvas');
         const cCtx = circuitCanvas.getContext('2d');
-        const boxWidth = 220; // 适配最新宽度
+        const boxWidth = 220; 
         const boxHeight = 120; 
         circuitCanvas.width = boxWidth;
         circuitCanvas.height = boxHeight;
@@ -344,7 +344,7 @@
                 this.history = [{x: this.x, y: this.y}];
                 this.speed = 1.3;
                 this.life = 0;
-                this.maxLife = Math.random() * 40 + 30; // 稍微增加生命周期以走完更长的横向电路
+                this.maxLife = Math.random() * 40 + 30; 
                 this.color = Math.random() > 0.4 ? 'rgba(0, 242, 254, 0.75)' : 'rgba(79, 172, 254, 0.75)';
                 this.hasNode = Math.random() > 0.3; 
             }
@@ -389,11 +389,10 @@
             }
         }
 
-        // 适当增加导线数量，让变宽后的方块内部电路更充实
         const traces = Array.from({length: 12}, () => new Trace());
 
 
-        // === 4. 透明底色四周光速无限发散 Canvas 引擎（完美适配 220x120 比例） ===
+        // === 4. 四周光速无限发散 Canvas 引擎 ===
         const canvas = document.getElementById('speedCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = 400; canvas.height = 300;
@@ -407,10 +406,8 @@
             constructor() { this.reset(); }
             reset() {
                 this.angle = Math.random() * Math.PI * 2;
-                
-                // 核心算法调整：适配拉宽后的半长宽系数，让粒子紧密贴合 220x120 晶片的四壁向外喷射
-                const rx = 110; // 220 / 2
-                const ry = 60;  // 120 / 2
+                const rx = 110; 
+                const ry = 60;  
                 this.x = centerX + Math.cos(this.angle) * rx;
                 this.y = centerY + Math.sin(this.angle) * ry;
                 
